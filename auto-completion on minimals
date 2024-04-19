@@ -1,0 +1,47 @@
+import java.util.*;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Чтение размера словаря и количества запросов
+        int N = scanner.nextInt();
+        int Q = scanner.nextInt();
+
+        // Чтение слов словаря
+        String[] dictionary = new String[N];
+        for (int i = 0; i < N; i++) {
+            dictionary[i] = scanner.next();
+        }
+
+        // Чтение запросов и обработка каждого запроса
+        for (int i = 0; i < Q; i++) {
+            int k = scanner.nextInt();
+            String prefix = scanner.next();
+
+            // Поиск слова с заданным префиксом
+            String result = linearSearch(dictionary, prefix, k);
+            // Вывод результата
+            System.out.println(result == null ? -1 : Arrays.asList(dictionary).indexOf(result) + 1);
+        }
+
+        scanner.close();
+    }
+
+    private static String linearSearch(String[] dictionary, String prefix, int k) {
+        List<String> results = new ArrayList<>();
+
+        // Проходим по всем словам в словаре
+        for (String word : dictionary) {
+            // Если слово начинается с префикса, добавляем его в список результатов
+            if (word.startsWith(prefix)) {
+                results.add(word);
+            }
+        }
+
+        // Если k слово существует, возвращаем его, иначе возвращаем null
+        return k <= results.size() ? results.get(k - 1) : null;
+    }
+}
